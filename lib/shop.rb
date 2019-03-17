@@ -20,6 +20,10 @@ class Shop
 
   private
 
+  def total_reset
+    @total = 0
+  end
+
   def sort_basket(basket)
     basket.split('').each do |product|
       return @total = -1 unless SKUS.include?(product)
@@ -35,9 +39,11 @@ class Shop
     product_counter(product)
   end
 
-  def counter_reset
-    @counters.each do |counter|
-      counter[1] = 0
+  def product_counter(product)
+    @counters.each do |sku|
+      if sku[0] == product
+        @counters[product] += 1
+      end
     end
   end
 
@@ -51,15 +57,9 @@ class Shop
     counter_reset
   end
 
-  def product_counter(product)
-    @counters.each do |sku|
-      if sku[0] == product
-        @counters[product] += 1
-      end
+  def counter_reset
+    @counters.each do |counter|
+      counter[1] = 0
     end
-  end
-
-  def total_reset
-    @total = 0
   end
 end
