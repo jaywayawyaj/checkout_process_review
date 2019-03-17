@@ -20,11 +20,15 @@ class Shop
 
   private
 
-  attr_reader :total, :counters
-
   def reset_totals
     reset_counters
     @total = 0
+  end
+
+  def reset_counters
+    @counters.each do |sku, amount|
+      @counters[sku[0]] = 0
+    end
   end
 
   def sort_basket(basket)
@@ -56,12 +60,6 @@ class Shop
         @total -=
           @counters[sku]/pricing[:deal_amount] * pricing[:discount]
       end
-    end
-  end
-
-  def reset_counters
-    @counters.each do |sku|
-      sku[1] = 0
     end
   end
 end
