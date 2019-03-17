@@ -29,8 +29,8 @@ class Shop
   end
 
   def calculate_price(product)
-    SKUS.each do |sku, value|
-      @total += value[:amount] if product == sku
+    SKUS.each do |sku, pricing|
+      @total += pricing[:price] if product == sku
     end
     product_counter(product)
   end
@@ -42,9 +42,11 @@ class Shop
   end
 
   def calculate_discount
-    @counters.each do |sku|
-      @total -=
-        @counters[sku[0]]/SKUS[sku[0]][:deal_amount] * SKUS[sku[0]][:discount]
+    SKUS.each do |sku, pricing|
+      if pricing[:deal_amount]
+        @total -=
+          @counters[sku]/pricing[:deal_amount] * pricing[:discount]
+      end
     end
     counter_reset
   end
