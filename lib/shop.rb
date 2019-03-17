@@ -1,6 +1,8 @@
 require 'pry'
+require_relative 'products/skus'
 
 class Shop
+  include Products::Skus
   def initialize
     @total = 0
     @counters = {
@@ -8,13 +10,6 @@ class Shop
       'B' => 0
     }
   end
-
-  SKUS = {
-    'A' => {amount: 50, deal_amount: 3, discount: 20},
-    'B' => {amount: 30, deal_amount: 2, discount: 15},
-    'C' => {amount: 20},
-    'D' => {amount: 15}
-  }
 
   def checkout(basket)
     total_reset
