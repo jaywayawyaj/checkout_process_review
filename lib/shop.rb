@@ -12,7 +12,7 @@ class Shop
   end
 
   def checkout(basket)
-    total_reset
+    reset_totals
     return -1 unless basket.is_a? String
     sort_basket(basket)
     @total
@@ -20,7 +20,10 @@ class Shop
 
   private
 
-  def total_reset
+  attr_reader :total, :counters
+
+  def reset_totals
+    reset_counters
     @total = 0
   end
 
@@ -54,12 +57,11 @@ class Shop
           @counters[sku]/pricing[:deal_amount] * pricing[:discount]
       end
     end
-    counter_reset
   end
 
-  def counter_reset
-    @counters.each do |counter|
-      counter[1] = 0
+  def reset_counters
+    @counters.each do |sku|
+      sku[1] = 0
     end
   end
 end
